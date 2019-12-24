@@ -3,14 +3,14 @@ const User = require('../model/User');
 const jwt = require("jsonwebtoken");
 
 router.post('/register', async (req, res) => {
-
+    
     const emailExist = await User.findOne({ email: req.body.email });
     if (emailExist) return res.status(400).send('Email Already exists');
 
     // create a new user 
 
     const user = new User({
-        firstName: req.body.name,
+        firstName: req.body.firstName,
         middleName: req.body.middleName,
         lastName: req.body.name,
         email: req.body.email,
@@ -37,12 +37,12 @@ router.post('/register', async (req, res) => {
 // login 
 
 router.post('/login', async (req, res) => {
-    const emailExist = await User.findOne({ email: req.body.email });
-    if (!emailExist) return res.status(400).send('User is Not register Please Check your Email');
+    const data = await User.findOne({ email: req.body.email });
+    if (!data) return res.status(400).send('User is Not register Please Check your Email');
 
     const password = await User.findOne({ password: req.body.password });
     if (!password) return res.status(400).send('password Not Match');
-    const token = jwt.sign({ emailExist }, "abcd");
+    const token = jwt.sign({ data }, "abcd");
     const response = {
         "token": token
     }
@@ -51,6 +51,11 @@ router.post('/login', async (req, res) => {
 
 
 })
+
+// user data 
+
+    
+
 
 
 module.exports = router;
