@@ -122,7 +122,7 @@ class login extends Component {
 
     render() {
         console.log("PROPS", this.props)
-        if (this.state.isLogin) {
+        if (localStorage.getItem("token")) {
             return (
                 <div>
                     <h1>Welcome {this.state.user && this.state.user.firstName} </h1>
