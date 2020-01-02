@@ -3,7 +3,7 @@ import Jwt from 'jwt-decode';
 import { Redirect } from 'react-router-dom'
 import { withRouter } from "react-router";
 import {connect} from 'react-redux';
-import {loginRequest} from '../../action/authAction';
+import {loginRequest, signUpRequest} from '../../action/authAction';
 
 
 
@@ -76,38 +76,21 @@ class login extends Component {
        this.props.loginRequest(this.state.email, this.state.password)
     }
 
+
+    
     //   signUp click 
 
     signUp = () => {
         let data = {
             firstName: this.state.fullName,
-            middleName: "k",
+            middleName: "",
             lastName: "yadav",
             email: this.state.newEmail,
             password: this.state.newPassword,
             profilePic: this.state.profilePic,
             dob: this.state.dob,
-            user: null
         }
-        try {
-            fetch('http://localhost:5000/api/user/register', {
-                method: 'POST',
-                body: JSON.stringify(data),
-                headers: {
-                    "Content-type": "application/json; charset=UTF-8"
-                }
-            })
-                .then(response => response.json())
-                .then(json => console.log(json))
-            alert("Registrt SuccessFull Please Login")
-            this.setState({
-                tab: 'login'
-            })
-        }
-        catch (error) {
-            console.log(error.message)
-
-        }
+        this.props.signUpRequest(data)
     }
 
     componentDidMount() {
@@ -219,4 +202,4 @@ const mapStateToProps = state => ({
     user : state.auth.user,
     token : state.auth.token
 })
-export default withRouter(connect(mapStateToProps, {loginRequest})(login))
+export default withRouter(connect(mapStateToProps, {loginRequest, signUpRequest})(login))

@@ -13,12 +13,16 @@ const postRoute = require('./routes/blogPost');
 // const dotenv = require('dotenv').config();
 // "mongodb+srv://Saroj85:Saroj@852131@contactkeeper-v7ban.mongodb.net/test?retryWrites=true&w=majority"
 // connect to database
-var url = "mongodb://localhost:27017/own_blog";
+var url = "mongodb+srv://Saroj85:Saroj@852131@contactkeeper-v7ban.mongodb.net/test?retryWrites=true&w=majority";
 
 
 mongoose.connect(url, 
      { useNewUrlParser: true },
     () => console.log("db Connected!!"));
+    mongoose.set('useNewUrlParser', true);
+    mongoose.set('useFindAndModify', false);
+    mongoose.set('useCreateIndex', true);
+    mongoose.set('useUnifiedTopology', true);
 
 app.use(cors());
 app.use(express.json());
@@ -32,5 +36,7 @@ app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
     extended: true
   })); 
 
-  
+
+
+
 app.listen(port, () => console.log(`server start on ${port}`))
